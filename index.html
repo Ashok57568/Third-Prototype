@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <!-- Add a link to the CSS file -->
+  <link rel="stylesheet" href="AshokDhungana_2329448.css"/>
+  <!-- Add a script tag for the Font Awesome kit -->
+  <script src="https://kit.fontawesome.com/d771216f39.js" crossorigin="anonymous"></script>
+  <!-- Add jQuery library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <!-- Create a form for submitting a city name -->
+  <form id="weatherForm">
+    <div class="input">
+      <!-- Add an input field for the city name -->
+      <input type="text" class="inputValue" placeholder="Enter a city here" name="search">
+      <input type="submit" value="Submit" class="button">
+    </div>
+  </form>
+  <!-- Create a container for displaying the weather information -->
+  <div class="display">
+    <!-- Add a heading for the city name -->
+    <h1 class="name"></h1>
+    <!-- Add an image tag for displaying the weather icon -->
+    <img class="icon" src="" alt="Weather">
+    <!-- Add paragraph tags for displaying the temperature and weather description -->
+    <p class="temp"></p>
+    <p class="desc"></p>
+    <p class="day"></p>
+    <div class="next">
+      <table>
+        <tr>
+          <td class="humi"></td>
+          <td class="wind"></td>
+        </tr>
+        <tr>
+          <td id="rain"></td>
+          <td class="feelslike"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!-- Add a script tag for the JavaScript file -->
+  <script src="ashok.js"></script>
+  <script>
+    // Handle form submission with AJAX
+    $(document).ready(function() {
+      $('#weatherForm').submit(function(event) {
+        event.preventDefault(); // Prevent the form from submitting and refreshing the page
+
+        var formData = $(this).serialize(); // Get form data
+
+        // Send AJAX request to the PHP script
+        $.ajax({
+          type: 'POST',
+          url: 'AshokDhungana_232944.php',
+          data: formData,
+          success: function(response) {
+            // Update the weather information in the HTML
+            $('.name').html(response.name);
+            $('.icon').attr('src', response.icon);
+            $('.temp').html(response.temperature);
+            $('.desc').html(response.description);
+            $('.day').html(response.day);
+            $('.humi').html(response.humidity);
+            $('.wind').html(response.wind);
+            $('#rain').html(response.rain);
+            $('.feelslike').html(response.feelsLike);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
